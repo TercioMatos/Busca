@@ -1,6 +1,6 @@
 # Algoritmo de Busca (Inteligência Artifical)
 
-![alt tag](http://www.alzaro.com.br/img/alisson.jpg)
+![alt tag](http://www.alzaro.com.br/img/grafo.jpg)
 
 ## Entradas:
 
