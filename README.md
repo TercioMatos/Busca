@@ -16,7 +16,7 @@
 	- Armazenar os vértices e pesos das arestas em uma matriz de adjacências, minimizando o espaço.
 	- Aplicar algoritmo de busca para encontrar o melhor caminho.
 	- Calcular a distância Manhattan do ponto inicial ao ponto final, sendo:
-	- stância Manhattan entre ** P1(x1, y1) e P2(x2, y2) é dm = |x1 - x2| + |y1 - y2| **.
+		- Distância Manhattan entre ** P1(x1, y1) e P2(x2, y2) é dm = |x1 - x2| + |y1 - y2| **.
 
 ## Saídas:
 
