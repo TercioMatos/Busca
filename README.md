@@ -1,4 +1,4 @@
-# Algoritmo de Busca (Inteligência Aritifical)
+# Algoritmo de Busca (Inteligência Artifical)
 
 ![alt tag](http://www.alzaro.com.br/img/alisson.jpg)
 
