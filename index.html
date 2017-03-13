@@ -13,19 +13,5 @@ Your browser does not support the HTML5 canvas tag.</canvas>
 	</main>
 	<script src="./assets/js/libs/dijkstras-algorithm-master/dijkstras.js"></script>
 	<script src="./assets/js/app.js"></script>
-	<script type="text/javascript">
-		var tamGraph = 30;
-		var positionX = 80;
-		var positionY = 80;
-		function createGraph(elem) {
-			elem.beginPath();
-			elem.arc(positionX,positionY,tamGraph,0,2*Math.PI);
-			elem.stroke();
-		}
-		var c = document.getElementById("graph");
-		var ctx = c.getContext("2d");
-		createGraph(ctx);
-	</script>
-
 </body>
 </html>
