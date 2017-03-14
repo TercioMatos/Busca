@@ -9,15 +9,17 @@
 <body>
 	<main class="container">
 	<h1>Algoritmo de Busca (Inteligência Artifical)</h1>
-	<form action="">
+	<form action="#">
 		<label for="">Nome Vértice: </label>
 		<input class="form-control" placeholder="A" type="text">
 		<label for="">Arestas e valores: </label>
 		<input class="form-control" placeholder="A=8;B=9;C=10;" type="text">
 
+		<div class="alert alert-danger hidden" id="error">
+		</div>
 		<div class="botoes">
-			<button class="btn btn-success">Inserir Vértice</button>
-			<button class="btn btn-danger">Finalizar Grafo</button>
+			<button id="inserir" class="btn btn-success">Inserir Vértice</button>
+			<button id="finalizar" class="btn btn-danger">Finalizar Grafo</button>
 		</div>
 	</form>
 		<canvas id="graph" width="1000px" height="800">
@@ -27,6 +29,31 @@ Your browser does not support the HTML5 canvas tag.</canvas>
 	<script src="./assets/js/app.js"></script>
 
 	<script>
+		var defineValues = function(values) {
+			console.log(values);
+			var newValues = values.split(";");
+			console.log(newValues);
+		}
+		var inserir = function() {
+			var inputs = document.getElementsByClassName('form-control');
+			var erro = document.getElementById("error");
+			if(inputs[0].value == "" || inputs[0].value == undefined || inputs[1].value == "" || inputs[1].value == undefined){
+				erro.classList.remove("hidden");
+				erro.innerHTML = "Algum campo está inválido";
+				setTimeout(function() {
+					erro.classList.add("hidden");
+					erro.innerHTML = "";
+				}, 3000);
+			}
+			var nome = inputs[0].value.toUpperCase();
+			var values = defineValues(inputs[1].value);
+		}
+
+		var finalizar = function() {
+			console.log("FINALIZAR");
+		}
+		document.getElementById('inserir').addEventListener("click", inserir);
+		document.getElementById('finalizar').addEventListener("click", finalizar);
 		var g = new Graph();
 
 		// Primeiro você define os vértices, suas arestas e conexões
@@ -44,7 +71,7 @@ Your browser does not support the HTML5 canvas tag.</canvas>
 		buildConnections();
 
 		// Log test, with the addition of reversing the path and prepending the first node so it's more readable
-		console.log(g.shortestPath('A', 'H'));//.concat(['A']).reverse());
+		// console.log(g.shortestPath('A', 'H'));//.concat(['A']).reverse());
 	</script>
 </body>
 </html>
