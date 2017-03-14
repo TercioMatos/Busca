@@ -7,7 +7,7 @@ var cont = 1;
 var vertexPosition = {};
 var copyConnections = {};
 
-var drawGraph = function(name, objConnections, G) {
+var drawVertex = function(name, objConnections, G) {
 	// Passa os valores para a library
 	G.addVertex(name, objConnections);
 
@@ -65,32 +65,10 @@ var drawConnection = function(from, to) {
 	ctx.closePath()
 }
 
-var buildConections = function(vertexPosition, copyConnections) {
+var buildConnections = function() {
 	for(from in copyConnections) {
 		for(to in copyConnections[from]) {
 			drawConnection(vertexPosition[from], vertexPosition[to])
 		}
 	}
 }
-
-
-
-var g = new Graph();
-
-drawGraph('A', {B: 7, C: 8}, g);
-drawGraph('B', {A: 7, F: 2}, g);
-drawGraph('C', {A: 8, F: 6, G: 4}, g);
-drawGraph('D', {F: 8}, g);
-drawGraph('E', {H: 1}, g);
-drawGraph('F', {B: 2, C: 6, D: 8, G: 9, H: 3}, g);
-drawGraph('G', {C: 4, F: 9}, g);
-drawGraph('H', {E: 1, F: 3}, g);
-
-
-console.log();
-console.log();
-
-buildConections(vertexPosition, copyConnections);
-
-// Log test, with the addition of reversing the path and prepending the first node so it's more readable
-console.log(g.shortestPath('A', 'H'));//.concat(['A']).reverse());
