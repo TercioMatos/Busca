@@ -1,7 +1,8 @@
-var tamGraph = 30;
-var positionX = 80;
+var defaultPosition = 100;
+var tamGraph = 80;
+var positionX = defaultPosition;
 var oldY;
-var positionY = 80;
+var positionY = defaultPosition;
 var cont = 1;
 var vertexPosition = {};
 var copyConnections = {};
@@ -25,13 +26,13 @@ var drawGraph = function(name, objConnections, G) {
 
 	// condicional para fazer com que os vértices fiquem lado a lado
 	if(cont % 2 == 0) {
-		positionX = (positionX+100);
+		positionX = (positionX+190);
 		positionY = oldY;
 		cont--;
 	}else{
 		cont++;
 		oldY = positionY;
-		positionY = (positionY+90);
+		positionY = (positionY+180);
 	}
 
 	//desenha os vértices
