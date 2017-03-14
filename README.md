@@ -1,4 +1,4 @@
-# Algoritmo de Busca (Inteligência Artifical)
+# Algoritmo de Dijkstras (Inteligência Artifical)
 
 ![alt tag](http://www.alzaro.com.br/img/grafo.jpg)
 
