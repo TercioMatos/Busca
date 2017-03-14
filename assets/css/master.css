@@ -10,3 +10,7 @@ main {
 canvas {
    display: inline;
 }
+
+.botoes {
+	margin-top: 1em;
+}
