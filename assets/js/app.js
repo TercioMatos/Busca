@@ -24,7 +24,7 @@ var drawGraph = function(name, objConnections, G) {
 	ctx.beginPath();
 	ctx.arc(positionX,positionY,tamGraph,0,2*Math.PI);
 
-	// condicionar para fazer com que os vértices fiquem lado a lado
+	// condicional para fazer com que os vértices fiquem lado a lado
 	if(cont % 2 == 0) {
 		positionX = (positionX+100);
 		positionY = oldY;
@@ -39,20 +39,21 @@ var drawGraph = function(name, objConnections, G) {
 	ctx.stroke();
 }
 
+// função que desenha as conexões
 var drawConnection = function(from, to) {
-	// from.positionY;
-	// from.positionX;
-
-	// to.positionX;
-	// to.positionY;
-}
-
-var createConections = function(vertexPosition, copyConnections) {
 	var c = document.getElementById("graph");
 	var ctx = c.getContext("2d");
-	ctx.moveTo(80,80);
-	ctx.lineTo(500,100);
+	ctx.moveTo(from.positionX, from.positionY);
+	ctx.lineTo(to.positionX,to.positionY);
 	ctx.stroke();
+}
+
+var buildConections = function(vertexPosition, copyConnections) {
+	for(from in copyConnections) {
+		for(to in copyConnections[from]) {
+			drawConnection(vertexPosition[from], vertexPosition[to])
+		}
+	}
 }
 
 
@@ -70,7 +71,9 @@ drawGraph('H', {E: 1, F: 3}, g);
 
 
 console.log();
-console.log(copyConnections);
+console.log();
+
+buildConections(vertexPosition, copyConnections);
 
 // Log test, with the addition of reversing the path and prepending the first node so it's more readable
 console.log(g.shortestPath('A', 'H'));//.concat(['A']).reverse());
