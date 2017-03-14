@@ -1,6 +1,5 @@
 var tamGraph = 30;
 var positionX = 80;
-var oldX;
 var oldY;
 var positionY = 80;
 var cont = 1;
@@ -39,13 +38,30 @@ var drawGraph = function(name, objConnections, G) {
 	ctx.stroke();
 }
 
+var getRandomColor = function() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
 // função que desenha as conexões
 var drawConnection = function(from, to) {
+
 	var c = document.getElementById("graph");
 	var ctx = c.getContext("2d");
+	var color = getRandomColor();
+
+	ctx.beginPath()
+	ctx.strokeStyle = color;
+
 	ctx.moveTo(from.positionX, from.positionY);
 	ctx.lineTo(to.positionX,to.positionY);
+
 	ctx.stroke();
+	ctx.closePath()
 }
 
 var buildConections = function(vertexPosition, copyConnections) {
