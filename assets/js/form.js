@@ -1,7 +1,7 @@
 var clearFormFields = function() {
-	var campos = document.getElementsByClassName('fom-control');
-	campos[0].innerHTML = "";		
-	campos[1].innerHTML = "";		
+	var campos = document.getElementsByClassName('form-control');
+	campos[0].value = "";		
+	campos[1].value = "";		
 }
 
 var message = function (text, status) {
@@ -61,6 +61,8 @@ var inserir = function() {
 
 	var obj = buildValuesVert(key,inputs[1].value);
 	drawVertex(key, obj, g);
+	message("Grafo gerado", "success");
+	clearFormFields();
 }
 
 var finalizar = function() {
