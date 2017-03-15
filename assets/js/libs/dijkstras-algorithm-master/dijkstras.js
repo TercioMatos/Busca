@@ -34,6 +34,14 @@ function Graph(){
     this.vertices[name] = edges;
   };
 
+  this.calcDistance = function(path){
+    var distance = 0;
+    for(var i=1;i<path.length;i++){
+      distance += this.vertices[path[i-1]][path[i]];
+    }
+    return distance;
+  }
+
   this.shortestPath = function (start, finish) {
     var nodes = new PriorityQueue(),
         distances = {},
