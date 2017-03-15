@@ -30,6 +30,17 @@ function Graph(){
   var INFINITY = 1/0;
   this.vertices = {};
 
+  this.calcDistance = function(path){
+
+    var distance = 0;
+
+    for(var i=1;i<path.length;i++){
+      distance += this.vertices[path[i-1]][path[i]];
+    }
+
+    return distance;
+
+  }
   this.addVertex = function(name, edges){
     this.vertices[name] = edges;
   };
@@ -62,7 +73,7 @@ function Graph(){
 
         while(previous[smallest]) {
           path.push(smallest);
-          console.log(this.vertices[previous[smallest]][smallest]);
+          //console.log(this.vertices[previous[smallest]][smallest]);
           smallest = previous[smallest];
         }
 
