@@ -92,3 +92,9 @@ var buildConnections = function() {
 		}
 	}
 }
+
+var mountClosestPath = function(items) {
+	for(item in items) {
+
+	}
+}

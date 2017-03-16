@@ -10,16 +10,16 @@
 	<main class="container">
 	<h1>Algoritmo de Busca (Inteligência Artifical)</h1>
 	<ul class="nav nav-tabs">
-	    <li class="active"><a data-toggle="tab" href="#inserir">Inserir Grafos</a></li>
-	    <li><a data-toggle="tab" href="#procurar">Procurar Grafos</a></li>
+	    <li class="active"><a data-toggle="tab" href="#inserir-panel">Inserir Grafos</a></li>
+	    <li><a data-toggle="tab" id="link-procura" href="#procurar-panel">Procurar Grafos</a></li>
 	</ul>
 	<div class="tab-content">
-		<div id="inserir" class="tab-pane fade in active">
+		<div id="inserir-panel" class="tab-pane fade in active">
 		    <form action="#">
 				<label for="">Nome Vértice: </label>
-				<input class="form-control" placeholder="A" type="text">
+				<input class="form-control novo-vertice" placeholder="A" type="text">
 				<label for="">Arestas e valores: </label>
-				<input class="form-control" placeholder="A=8;B=9;C=10;" type="text">
+				<input class="form-control novo-vertice" placeholder="A=8;B=9;C=10;" type="text">
 
 				<div class="alert hidden" id="message">
 				</div>
@@ -29,19 +29,20 @@
 				</div>
 			</form>
 	    </div>
-	    <div id="procurar" class="tab-pane fade">
-		    <form action="">
+	    <div id="procurar-panel" class="tab-pane fade">
+		    <form id="formBusca" action="">
 				<label for="">Nome Vértice Inicial: </label>
-				<input class="form-control" placeholder="A" type="text">
+				<input class="form-control procura-caminho" placeholder="A" type="text">
 				<label for="">Nome Vértice Destino: </label>
-				<input class="form-control" placeholder="I" type="text">
+				<input class="form-control procura-caminho" placeholder="I" type="text">
 
 				<div class="alert hidden" id="message">
 				</div>
 				<div class="botoes">
-					<button id="inserir" class="btn btn-success">Procurar Caminho</button>
+					<button id="search" class="btn btn-success">Procurar Caminho</button>
 				</div>
 			</form>
+	    	<div id="busca"></div>
 	    </div>
 	</div>
 	<canvas id="graph" width="1000px" height="800">
@@ -59,6 +60,8 @@
 
 		document.getElementById('inserir').addEventListener("click", inserir);
 		document.getElementById('finalizar').addEventListener("click", finalizar);
+		document.getElementById('link-procura').addEventListener("click", validaProcura);
+		document.getElementById('search').addEventListener("click", melhorCaminho);
 
 		// Primeiro você define os vértices, suas arestas e conexões
 		drawVertex('A', {B: 7, C: 8}, g);

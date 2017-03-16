@@ -52,7 +52,7 @@ var buildValuesVert = function (keyVertex, amountValues) {
 	return obj;
 }
 var inserir = function() {
-	var inputs = document.getElementsByClassName('form-control');
+	var inputs = document.getElementsByClassName('novo-vertice');
 	
 	if(inputs[0].value == "" || inputs[0].value == undefined || inputs[1].value == "" || inputs[1].value == undefined){
 		message("Algum campo está inválido","error");
@@ -65,6 +65,31 @@ var inserir = function() {
 	clearFormFields();
 }
 
+var melhorCaminho = function() {
+	var campoCaminho = document.getElementsByClassName("procura-caminho");
+	if(campoCaminho[0].value == "" || campoCaminho[0].value == undefined || campoCaminho[1].value == "" || campoCaminho[1].value == undefined){
+		message("Algum campo está inválido","error");
+	}
+
+	var valorInicio = campoCaminho[0].value.toUpperCase();
+	var valorDestino = campoCaminho[1].value.toUpperCase();
+	var menorCaminho = g.shortestPath(valorInicio, valorDestino);
+	console.log(menorCaminho);
+}
+
 var finalizar = function() {
 	buildConnections();
+}
+
+var validaProcura = function() {
+	var formBusca = document.getElementById('formBusca');
+	if(Object.keys(g.vertices).length == 0) {
+		var mensagemBusca = document.getElementById('busca');
+		formBusca.classList.add("hidden");
+		mensagemBusca.innerHTML = "Deve existir algum grafo para que a procura seja feita";
+	}else{
+		var mensagemBusca = document.getElementById('busca');
+		mensagemBusca.innerHTML = "";
+		formBusca.classList.remove("hidden");
+	}
 }
