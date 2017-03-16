@@ -7,10 +7,6 @@ main {
 	text-align: center;
 }
 
-.container {
-	position: relative;
-}
-
 canvas {
    display: inline;
 }
@@ -25,6 +21,4 @@ canvas {
 
 form {
 	margin-top: 2em;
-	position: absolute;
-	width: 100%;
 }

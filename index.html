@@ -13,39 +13,40 @@
 	    <li class="active"><a data-toggle="tab" href="#inserir">Inserir Grafos</a></li>
 	    <li><a data-toggle="tab" href="#procurar">Procurar Grafos</a></li>
 	</ul>
+	<div class="tab-content">
+		<div id="inserir" class="tab-pane fade in active">
+		    <form action="#">
+				<label for="">Nome Vértice: </label>
+				<input class="form-control" placeholder="A" type="text">
+				<label for="">Arestas e valores: </label>
+				<input class="form-control" placeholder="A=8;B=9;C=10;" type="text">
 
-	<div id="inserir" class="tab-pane fade in active">
-	    <form action="#">
-			<label for="">Nome Vértice: </label>
-			<input class="form-control" placeholder="A" type="text">
-			<label for="">Arestas e valores: </label>
-			<input class="form-control" placeholder="A=8;B=9;C=10;" type="text">
+				<div class="alert hidden" id="message">
+				</div>
+				<div class="botoes">
+					<button id="inserir" class="btn btn-success">Inserir Vértice</button>
+					<button id="finalizar" class="btn btn-danger">Finalizar Grafo</button>
+				</div>
+			</form>
+	    </div>
+	    <div id="procurar" class="tab-pane fade">
+		    <form action="">
+				<label for="">Nome Vértice Inicial: </label>
+				<input class="form-control" placeholder="A" type="text">
+				<label for="">Nome Vértice Destino: </label>
+				<input class="form-control" placeholder="I" type="text">
 
-			<div class="alert hidden" id="message">
-			</div>
-			<div class="botoes">
-				<button id="inserir" class="btn btn-success">Inserir Vértice</button>
-				<button id="finalizar" class="btn btn-danger">Finalizar Grafo</button>
-			</div>
-		</form>
-    </div>
-    <div id="procurar" class="tab-pane fade">
-	    <form action="">
-			<label for="">Nome Vértice: </label>
-			<input class="form-control" placeholder="A" type="text">
-			<label for="">Arestas e valores: </label>
-			<input class="form-control" placeholder="A=8;B=9;C=10;" type="text">
-
-			<div class="alert hidden" id="message">
-			</div>
-			<div class="botoes">
-				<button id="inserir" class="btn btn-success">Procurar Caminho</button>
-				<button id="finalizar" class="btn btn-warning">Inserir Vértice</button>
-			</div>
-		</form>
-    </div>
-		<canvas id="graph" width="1000px" height="800">
-Your browser does not support the HTML5 canvas tag.</canvas>
+				<div class="alert hidden" id="message">
+				</div>
+				<div class="botoes">
+					<button id="inserir" class="btn btn-success">Procurar Caminho</button>
+				</div>
+			</form>
+	    </div>
+	</div>
+	<canvas id="graph" width="1000px" height="800">
+		Your browser does not support the HTML5 canvas tag.
+	</canvas>
 	</main>
 	<script src="node_modules/jquery/dist/jquery.min.js"></script>
 	<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -60,16 +61,16 @@ Your browser does not support the HTML5 canvas tag.</canvas>
 		document.getElementById('finalizar').addEventListener("click", finalizar);
 
 		// Primeiro você define os vértices, suas arestas e conexões
-		// drawVertex('A', {B: 7, C: 8}, g);
-		// drawVertex('B', {A: 7, F: 2}, g);
-		// drawVertex('C', {A: 8, F: 6, G: 4}, g);
-		// drawVertex('D', {F: 8}, g);
-		// drawVertex('E', {H: 1}, g);
-		// drawVertex('F', {B: 2, C: 6, D: 8, G: 9, H: 3}, g);
-		// drawVertex('G', {C: 4, F: 9}, g);
-		// drawVertex('H', {E: 1, F: 3}, g);
+		drawVertex('A', {B: 7, C: 8}, g);
+		drawVertex('B', {A: 7, F: 2}, g);
+		drawVertex('C', {A: 8, F: 6, G: 4}, g);
+		drawVertex('D', {F: 8}, g);
+		drawVertex('E', {H: 1}, g);
+		drawVertex('F', {B: 2, C: 6, D: 8, G: 9, H: 3}, g);
+		drawVertex('G', {C: 4, F: 9}, g);
+		drawVertex('H', {E: 1, F: 3}, g);
 
-		// buildConnections();
+		buildConnections();
 
 		// Depois, você invoca a função 'buildConnections' para que ela ligue os vértices
 		// É necessário chamá-la, pois a operação de ligação dos vértices só ocorre após todos eles definidos
