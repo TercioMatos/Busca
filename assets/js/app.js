@@ -1,100 +1,88 @@
-var defaultPosition = 150;
-var tamGraph = 80;
-var positionX = defaultPosition;
-var oldY;
-var positionY = defaultPosition;
-var cont = 1;
-var vertexPosition = {};
-var copyConnections = {};
-
-var drawVertex = function(name, objConnections, G) {
-	// Passa os valores para a library
-	G.addVertex(name, objConnections);
-
-	//criação de dois objetos que serão usados para a criação da conexão
-
-		//contem as ligaçõs
-	copyConnections[name] = objConnections;
-		//contem as posições
-	vertexPosition[name] = {"positionY": positionY, "positionX": positionX};
-
-	// criação dos vértices
-	var c = document.getElementById("graph");
-	var ctx = c.getContext("2d");
-	ctx.beginPath();
-	ctx.arc(positionX,positionY,tamGraph,0,2*Math.PI);
-	
-	//especificações para a escrita do nome do vértice
-    ctx.font = "bold 18px serif";
-    ctx.textBaseline = "bottom";
-	ctx.fillText(name, positionX ,positionY);
-
-	// condicional para fazer com que os vértices fiquem lado a lado
-	if(cont % 2 == 0) {
-		positionX = (positionX+190);
-		positionY = oldY;
-		cont--;
-	}else{
-		cont++;
-		oldY = positionY;
-		positionY = (positionY+180);
-	}
-
-
-
-	//desenha os vértices
-	ctx.stroke();
-
-	ctx.closePath();
-}
-
-var getRandomColor = function() {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 6; i++ ) {
-        color += letters[Math.floor(Math.random() * 16)];
+var nLines = 2;
+var rWidth = 50;
+var canvas;
+var ctx;
+var elemLeft;
+var elemTop;
+var vertices = [];
+var initialX = 100;
+var initialY = 100;
+var tempVertices = [];
+window.onload = function () {
+    canvas = document.getElementById('myCanvas');
+    ctx = canvas.getContext("2d");
+    elemLeft = canvas.offsetLeft;
+    elemTop = canvas.offsetTop;
+    loadGraph();
+};
+function loadGraph() {
+    function generategrah(nVertices) {
+        var nV = nVertices;
+        //goes over columns
+        for (var line = 0; line < 2; line++) {
+            //goes over lines
+            for (var column = 0; column < Math.ceil(nVertices / 2) && nV > 0; column++, nV--) {
+                console.log('column ' + column, 'initialX ' + initialX, 'vezes ' + column * initialX);
+                vertices.push({
+                    colour: "blue",
+                    column: column,
+                    line: line,
+                    letter: "A",
+                    x: (rWidth * 3) * column + initialX,
+                    y: (rWidth * 3) * line + initialY
+                });
+            }
+        }
+        vertices.forEach(function (element) {
+            ctx.fillStyle = element.colour;
+            ctx.beginPath();
+            ctx.arc(element.x, element.y, rWidth, 0, 2 * Math.PI);
+            ctx.stroke();
+            ctx.font = "18px Georgia";
+            ctx.fillText("A", element.x - 6, element.y + 6);
+        });
     }
-    return color;
-}
-
-// função que desenha as conexões
-var drawConnection = function(from, to) {
-	var valor = copyConnections[from][to];
-	//atrivui os vértices as variáveis
-	var from = vertexPosition[from];
-	var to = vertexPosition[to]; 
-
-	var c = document.getElementById("graph");
-	var ctx = c.getContext("2d");
-	var color = getRandomColor();
-
-	ctx.beginPath();
-	ctx.strokeStyle = color;
-
-	//especificações para a escrita do nome do vértice
-    ctx.font = "18px serif";
-    ctx.textBaseline = "bottom";
-    linePositionX = (from.positionX + to.positionX) / Math.floor(Math.random() + 2);
-    linePositionY = (from.positionY + to.positionY) / Math.floor(Math.random() + 2);
-	ctx.fillText(valor, linePositionX ,linePositionY);
-
-	ctx.moveTo(from.positionX, from.positionY);
-	ctx.lineTo(to.positionX,to.positionY);
-
-	ctx.stroke();
-	ctx.closePath();
-}
-
-var buildConnections = function() {
-	for(from in copyConnections) {
-		for(to in copyConnections[from]) {
-			drawConnection(from, to);
-		}
-	}
-}
-
-var mountClosestPath = function(items) {
-	for(item in items) {
-
-	}
+    function checkEquality(a, b) {
+        if ((a - 1) == b || (a + 1) == b) {
+            return true;
+        }
+        return false;
+    }
+    function isValidLink() {
+        //case for same columns
+        if (tempVertices[0].column == tempVertices[1].column &&
+            checkEquality(tempVertices[0].line, tempVertices[1].line)) {
+            return true;
+        }
+        else if (tempVertices[0].line == tempVertices[1].line &&
+            checkEquality(tempVertices[0].column, tempVertices[1].column)) {
+            return true;
+        }
+        else if (checkEquality(tempVertices[0].line, tempVertices[1].line)
+            && checkEquality(tempVertices[0].column, tempVertices[1].column)) {
+            return true;
+        }
+        return false;
+    }
+    canvas.addEventListener('click', function (event) {
+        var x = event.pageX - elemLeft;
+        var y = event.pageY - elemTop;
+        vertices.forEach(function (item) {
+            if ((y > (item.y - rWidth) && y < item.y + rWidth)
+                && (x > (item.x - rWidth) && x < item.x + rWidth)) {
+                //alert('clicked an element ['+item.line+' , '+item.column+']');
+                tempVertices.push(item);
+                if (tempVertices.length == 2) {
+                    if (isValidLink()) {
+                        alert('valid!!!');
+                    }
+                    else {
+                        alert('invalid!!!');
+                    }
+                    tempVertices = [];
+                }
+            }
+        });
+    });
+    generategrah(19);
 }
