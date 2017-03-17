@@ -8,6 +8,7 @@ var vertices = [];
 var initialX = 100;
 var initialY = 100;
 var tempVertices = [];
+var sqrt2 = Math.sqrt(2);
 window.onload = function () {
     canvas = document.getElementById('myCanvas');
     ctx = canvas.getContext("2d");
@@ -16,6 +17,12 @@ window.onload = function () {
     loadGraph();
 };
 function loadGraph() {
+    function drawDiagonalLine() {
+        ctx.beginPath();
+        ctx.moveTo(tempVertices[0].x, tempVertices[0].y);
+        ctx.lineTo(tempVertices[1].x, tempVertices[1].y);
+        ctx.stroke();
+    }
     function generategrah(nVertices) {
         var nV = nVertices;
         //goes over columns
@@ -27,7 +34,7 @@ function loadGraph() {
                     colour: "blue",
                     column: column,
                     line: line,
-                    letter: String.fromCharCode(nVertices-nV+65),
+                    letter: String.fromCharCode(65 + nVertices - nV),
                     x: (rWidth * 3) * column + initialX,
                     y: (rWidth * 3) * line + initialY
                 });
@@ -75,6 +82,7 @@ function loadGraph() {
                 if (tempVertices.length == 2) {
                     if (isValidLink()) {
                         alert('valid!!!');
+                        drawDiagonalLine();
                     }
                     else {
                         alert('invalid!!!');

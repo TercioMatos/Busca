@@ -16,6 +16,7 @@ var vertices:IVertice[]=[];
 var initialX:number = 100;
 var initialY:number = 100;
 var tempVertices:IVertice[]=[];
+var sqrt2:number=Math.sqrt(2);
 
 window.onload = () => {
    canvas = <HTMLCanvasElement>document.getElementById('myCanvas');
@@ -26,6 +27,19 @@ window.onload = () => {
 }
 
 function loadGraph():void{
+
+    function drawDiagonalLine(){
+        ctx.beginPath();
+        ctx.moveTo(
+            tempVertices[0].x ,
+            tempVertices[0].y 
+        );
+        ctx.lineTo(
+            tempVertices[1].x ,
+            tempVertices[1].y 
+        );
+        ctx.stroke();
+    }
 
     function generategrah(nVertices:number){
 
@@ -42,7 +56,7 @@ function loadGraph():void{
                     colour:"blue",
                     column:column,
                     line:line,
-                    letter:"A",
+                    letter:String.fromCharCode(65+ nVertices - nV),
                     x:(rWidth*3)* column + initialX,
                     y:(rWidth*3)* line + initialY
                 })
@@ -57,7 +71,7 @@ function loadGraph():void{
             ctx.arc(element.x, element.y, rWidth, 0, 2*Math.PI);
             ctx.stroke();
             ctx.font="18px Georgia";
-            ctx.fillText("A",element.x-6,element.y+6);
+            ctx.fillText(element.letter,element.x-6,element.y+6);
 
         });
 
@@ -101,6 +115,7 @@ function loadGraph():void{
                     if(tempVertices.length==2){
                         if(isValidLink()){
                             alert('valid!!!');
+                            drawDiagonalLine();
                         }else{
                             alert('invalid!!!');
                         }
