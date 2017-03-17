@@ -8,6 +8,9 @@ var vertices = [];
 var initialX = 100;
 var initialY = 100;
 var tempVertices = [];
+var sqrt2 = Math.sqrt(2);
+var graphArray;
+var nVert = 5; //number of vertices
 window.onload = function () {
     canvas = document.getElementById('myCanvas');
     ctx = canvas.getContext("2d");
@@ -16,6 +19,12 @@ window.onload = function () {
     loadGraph();
 };
 function loadGraph() {
+    function drawDiagonalLine() {
+        ctx.beginPath();
+        ctx.moveTo(tempVertices[0].x, tempVertices[0].y);
+        ctx.lineTo(tempVertices[1].x, tempVertices[1].y);
+        ctx.stroke();
+    }
     function generategrah(nVertices) {
         var nV = nVertices;
         //goes over columns
@@ -27,9 +36,10 @@ function loadGraph() {
                     colour: "blue",
                     column: column,
                     line: line,
-                    letter: "A",
+                    letter: String.fromCharCode(65 + nVertices - nV),
                     x: (rWidth * 3) * column + initialX,
-                    y: (rWidth * 3) * line + initialY
+                    y: (rWidth * 3) * line + initialY,
+                    i: nVertices - nV
                 });
             }
         }
@@ -39,7 +49,7 @@ function loadGraph() {
             ctx.arc(element.x, element.y, rWidth, 0, 2 * Math.PI);
             ctx.stroke();
             ctx.font = "18px Georgia";
-            ctx.fillText("A", element.x - 6, element.y + 6);
+            ctx.fillText(element.letter, element.x - 6, element.y + 6);
         });
     }
     function checkEquality(a, b) {
@@ -75,6 +85,8 @@ function loadGraph() {
                 if (tempVertices.length == 2) {
                     if (isValidLink()) {
                         alert('valid!!!');
+                        drawDiagonalLine();
+                        saveOne();
                     }
                     else {
                         alert('invalid!!!');
@@ -84,5 +96,28 @@ function loadGraph() {
             }
         });
     });
-    generategrah(19);
+    generategrah(nVert);
+    graphArray = createArray(nVert);
+    console.log(graphArray);
+}
+function saveOne() {
+    var temNV = nVert;
+    if (tempVertices[0].i < tempVertices[1].i) {
+        graphArray[tempVertices[0].i][tempVertices[1].i - tempVertices[0].i] = 1;
+    }
+    else {
+        graphArray[tempVertices[1].i][tempVertices[0].i - tempVertices[1].i] = 2;
+    }
+    console.log('[0]: ' + tempVertices[0].i);
+    console.log('[1]: ' + tempVertices[1].i);
+    graphArray.forEach(function (element) {
+        console.log(element.toString());
+    });
+}
+function createArray(nVertices) {
+    var lines = new Array(nVertices);
+    for (var i = 0; i < nVertices; i++) {
+        lines[i] = new Array(nVertices - i).fill(0);
+    }
+    return lines;
 }

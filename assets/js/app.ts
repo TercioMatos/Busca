@@ -4,7 +4,8 @@ interface IVertice{
     x: number,
     column:number,
     line:number,
-    letter:string
+    letter:string,
+    i:number
 }
 var nLines:number = 2;
 var rWidth:number = 50;
@@ -16,6 +17,9 @@ var vertices:IVertice[]=[];
 var initialX:number = 100;
 var initialY:number = 100;
 var tempVertices:IVertice[]=[];
+var sqrt2:number=Math.sqrt(2);
+var graphArray:number[][];
+var nVert:number = 5; //number of vertices
 
 window.onload = () => {
    canvas = <HTMLCanvasElement>document.getElementById('myCanvas');
@@ -26,6 +30,19 @@ window.onload = () => {
 }
 
 function loadGraph():void{
+
+    function drawDiagonalLine(){
+        ctx.beginPath();
+        ctx.moveTo(
+            tempVertices[0].x ,
+            tempVertices[0].y 
+        );
+        ctx.lineTo(
+            tempVertices[1].x ,
+            tempVertices[1].y 
+        );
+        ctx.stroke();
+    }
 
     function generategrah(nVertices:number){
 
@@ -42,9 +59,10 @@ function loadGraph():void{
                     colour:"blue",
                     column:column,
                     line:line,
-                    letter:"A",
+                    letter:String.fromCharCode(65+ nVertices - nV),
                     x:(rWidth*3)* column + initialX,
-                    y:(rWidth*3)* line + initialY
+                    y:(rWidth*3)* line + initialY,
+                    i:nVertices - nV
                 })
 
             }
@@ -57,7 +75,7 @@ function loadGraph():void{
             ctx.arc(element.x, element.y, rWidth, 0, 2*Math.PI);
             ctx.stroke();
             ctx.font="18px Georgia";
-            ctx.fillText("A",element.x-6,element.y+6);
+            ctx.fillText(element.letter,element.x-6,element.y+6);
 
         });
 
@@ -101,6 +119,8 @@ function loadGraph():void{
                     if(tempVertices.length==2){
                         if(isValidLink()){
                             alert('valid!!!');
+                            drawDiagonalLine();
+                            saveOne();
                         }else{
                             alert('invalid!!!');
                         }
@@ -111,8 +131,34 @@ function loadGraph():void{
         })
     });
 
-    generategrah(19);
-
+    generategrah(nVert);
+    graphArray = createArray(nVert);
+    console.log(graphArray);
 }
 
+function saveOne(){
+    let temNV = nVert;
+    if(tempVertices[0].i<tempVertices[1].i){
+        graphArray[tempVertices[0].i][tempVertices[1].i-tempVertices[0].i]=1;
+    }else{
+        graphArray[tempVertices[1].i][tempVertices[0].i-tempVertices[1].i]=2;
+    }
+    console.log('[0]: '+tempVertices[0].i);
+    console.log('[1]: '+tempVertices[1].i);
+    graphArray.forEach((element:number[])=>{
+        console.log(element.toString());
+    })
+}
+
+
+
+function createArray(nVertices:number):number[][]{
+
+    let lines = new Array<number[]>(nVertices);
+    for(let i = 0; i<nVertices; i++){
+        lines[i]=new Array<number>(nVertices-i).fill(0);
+    }
+    return lines;
+
+}
 
