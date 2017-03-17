@@ -27,7 +27,7 @@ function loadGraph() {
                     colour: "blue",
                     column: column,
                     line: line,
-                    letter: "A",
+                    letter: String.fromCharCode(nVertices-nV+65),
                     x: (rWidth * 3) * column + initialX,
                     y: (rWidth * 3) * line + initialY
                 });
@@ -39,7 +39,7 @@ function loadGraph() {
             ctx.arc(element.x, element.y, rWidth, 0, 2 * Math.PI);
             ctx.stroke();
             ctx.font = "18px Georgia";
-            ctx.fillText("A", element.x - 6, element.y + 6);
+            ctx.fillText(element.letter, element.x - 6, element.y + 6);
         });
     }
     function checkEquality(a, b) {
