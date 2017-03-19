@@ -1,3 +1,7 @@
+
+npm install
+npm run watch
+
 # Algoritmo de Dijkstras (Inteligência Artifical)
 
 ![alt tag](http://www.alzaro.com.br/img/grafo.jpg)

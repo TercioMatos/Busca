@@ -1,3 +1,5 @@
+import {Dijkstra} from "./libs/dijkstras-algorithm-master/dijkstra";
+
 interface IVertice{
     colour: string,
     y: number,
@@ -20,6 +22,8 @@ var tempVertices:IVertice[]=[];
 var sqrt2:number=Math.sqrt(2);
 var graphArray:number[][];
 var nVert:number = 5; //number of vertices
+let graph:Dijkstra;
+
 
 window.onload = () => {
    canvas = <HTMLCanvasElement>document.getElementById('myCanvas');
@@ -72,10 +76,10 @@ function loadGraph():void{
             
             ctx.fillStyle = element.colour;
             ctx.beginPath();
-            ctx.arc(element.x, element.y, rWidth, 0, 2*Math.PI);
+            ctx.arc(element.x, element.y, rWidth, 0, 2 * Math.PI);
             ctx.stroke();
             ctx.font="18px Georgia";
-            ctx.fillText(element.letter,element.x-6,element.y+6);
+            ctx.fillText(element.letter, element.x-6, element.y+6);
 
         });
 
@@ -137,17 +141,21 @@ function loadGraph():void{
 }
 
 function saveOne(){
+
     let temNV = nVert;
     if(tempVertices[0].i<tempVertices[1].i){
-        graphArray[tempVertices[0].i][tempVertices[1].i-tempVertices[0].i]=1;
+        graphArray[tempVertices[1].i][tempVertices[0].i]=1;
     }else{
-        graphArray[tempVertices[1].i][tempVertices[0].i-tempVertices[1].i]=2;
+        graphArray[tempVertices[0].i][tempVertices[1].i]=1;
     }
+    //graphArray[tempVertices[1].i][tempVertices[0].i]=1;
     console.log('[0]: '+tempVertices[0].i);
     console.log('[1]: '+tempVertices[1].i);
     graphArray.forEach((element:number[])=>{
         console.log(element.toString());
     })
+
+    createGraph(graphArray);
 }
 
 
@@ -155,10 +163,38 @@ function saveOne(){
 function createArray(nVertices:number):number[][]{
 
     let lines = new Array<number[]>(nVertices);
-    for(let i = 0; i<nVertices; i++){
-        lines[i]=new Array<number>(nVertices-i).fill(0);
+    for(let i = 0; i < nVertices; i++){
+        lines[i]=new Array<number>(i+1).fill(0);
     }
     return lines;
 
+}
+
+function createGraph(arr:number[][]):void{
+
+    graph = new Dijkstra();    
+    for(let i = 0; i < arr.length; i++){
+        let edge: Object = {};
+        var oi:string=String.fromCharCode(65+i)+": ";
+        for(let j = 0; j < arr.length; j++){
+
+            if(j<arr[i].length){
+                if(arr[i][j]==1){
+                    edge[String.fromCharCode(65+j)]= arr[i][j];
+                    oi+= String.fromCharCode(65+j);
+                }
+            }else{
+                if(arr[j][i]==1)
+                {
+                    edge[String.fromCharCode(65+j)]= arr[j][i];
+                    oi+= String.fromCharCode(65+j);
+                }
+            }
+        }
+        graph.addVertex(String.fromCharCode(65+i),edge);
+        
+    }
+    console.log(graph.shortestPath('A', 'E'));
+    console.log("Distance: "+ graph.calcDistance(graph.shortestPath('A', 'E')));
 }
 
