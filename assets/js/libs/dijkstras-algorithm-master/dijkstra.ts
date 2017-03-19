@@ -66,6 +66,14 @@ export class Dijkstra{
 		this.vertices[name] = edges;
 	}
 
+	calcDistance(path){
+		let distance:number = 0;
+		for(let i:number = 1; i < path.length ; i++){
+			distance += this.vertices[path[i-1]][path[i]];
+		}
+		return distance;
+	}
+
 	/**
 	 * Computes the shortest path from start to finish
 	 * @param {[type]} start  [description]

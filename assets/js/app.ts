@@ -22,7 +22,7 @@ var tempVertices:IVertice[]=[];
 var sqrt2:number=Math.sqrt(2);
 var graphArray:number[][];
 var nVert:number = 5; //number of vertices
-
+let graph:Dijkstra;
 
 
 window.onload = () => {
@@ -155,7 +155,6 @@ function saveOne(){
         console.log(element.toString());
     })
 
-
     createGraph(graphArray);
 }
 
@@ -173,33 +172,29 @@ function createArray(nVertices:number):number[][]{
 
 function createGraph(arr:number[][]):void{
 
-    
+    graph = new Dijkstra();    
     for(let i = 0; i < arr.length; i++){
-        //let linha:string = '';
+        let edge: Object = {};
+        var oi:string=String.fromCharCode(65+i)+": ";
         for(let j = 0; j < arr.length; j++){
 
             if(j<arr[i].length){
-                //linha+=arr[i][j];
                 if(arr[i][j]==1){
-
+                    edge[String.fromCharCode(65+j)]= arr[i][j];
+                    oi+= String.fromCharCode(65+j);
                 }
             }else{
-                //linha+=arr[j][i];
                 if(arr[j][i]==1)
                 {
-
+                    edge[String.fromCharCode(65+j)]= arr[j][i];
+                    oi+= String.fromCharCode(65+j);
                 }
             }
-
         }
+        graph.addVertex(String.fromCharCode(65+i),edge);
         
     }
+    console.log(graph.shortestPath('A', 'E'));
+    console.log("Distance: "+ graph.calcDistance(graph.shortestPath('A', 'E')));
 }
 
-let graph:Dijkstra = new Dijkstra();
-graph.addVertex('A', { B: 7, C: 8 });
-graph.addVertex('C', { A: 8 });
-graph.addVertex('B', { A: 7, F: 8 });
-graph.addVertex('F', { B: 8 });
-
-console.log(graph.shortestPath('A', 'F'));
