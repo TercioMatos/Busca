@@ -1,0 +1,36 @@
+{
+  "name": "algoritmodebusca",
+  "version": "1.0.0",
+  "description": "Algoritmo de busca",
+  "main": "index.js",
+  "scripts": {
+    "prepublish": "typings install",
+    "watch": "webpack --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alissonzampietro/AlgoritmoDeBusca.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alissonzampietro/AlgoritmoDeBusca/issues"
+  },
+  "homepage": "https://github.com/alissonzampietro/AlgoritmoDeBusca#readme",
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.1.1",
+    "require": "^2.4.20",
+    "requirejs": "^2.3.3",
+    "systemjs": "^0.20.10",
+    "typescript": "^2.2.1"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-typescript": "^3.1.6",
+    "ts-loader": "^2.0.2",
+    "typescript": "^2.2.1",
+    "typings": "^2.1.0",
+    "webpack": "^2.2.1"
+  }
+}
