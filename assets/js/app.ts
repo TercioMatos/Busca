@@ -1,3 +1,5 @@
+import {Dijkstra} from "./libs/dijkstras-algorithm-master/dijkstra";
+
 interface IVertice{
     colour: string,
     y: number,
@@ -20,6 +22,8 @@ var tempVertices:IVertice[]=[];
 var sqrt2:number=Math.sqrt(2);
 var graphArray:number[][];
 var nVert:number = 5; //number of vertices
+
+
 
 window.onload = () => {
    canvas = <HTMLCanvasElement>document.getElementById('myCanvas');
@@ -72,10 +76,10 @@ function loadGraph():void{
             
             ctx.fillStyle = element.colour;
             ctx.beginPath();
-            ctx.arc(element.x, element.y, rWidth, 0, 2*Math.PI);
+            ctx.arc(element.x, element.y, rWidth, 0, 2 * Math.PI);
             ctx.stroke();
             ctx.font="18px Georgia";
-            ctx.fillText(element.letter,element.x-6,element.y+6);
+            ctx.fillText(element.letter, element.x-6, element.y+6);
 
         });
 
@@ -137,17 +141,22 @@ function loadGraph():void{
 }
 
 function saveOne(){
+
     let temNV = nVert;
     if(tempVertices[0].i<tempVertices[1].i){
-        graphArray[tempVertices[0].i][tempVertices[1].i-tempVertices[0].i]=1;
+        graphArray[tempVertices[1].i][tempVertices[0].i]=1;
     }else{
-        graphArray[tempVertices[1].i][tempVertices[0].i-tempVertices[1].i]=2;
+        graphArray[tempVertices[0].i][tempVertices[1].i]=1;
     }
+    //graphArray[tempVertices[1].i][tempVertices[0].i]=1;
     console.log('[0]: '+tempVertices[0].i);
     console.log('[1]: '+tempVertices[1].i);
     graphArray.forEach((element:number[])=>{
         console.log(element.toString());
     })
+
+
+    createGraph(graphArray);
 }
 
 
@@ -155,10 +164,42 @@ function saveOne(){
 function createArray(nVertices:number):number[][]{
 
     let lines = new Array<number[]>(nVertices);
-    for(let i = 0; i<nVertices; i++){
-        lines[i]=new Array<number>(nVertices-i).fill(0);
+    for(let i = 0; i < nVertices; i++){
+        lines[i]=new Array<number>(i+1).fill(0);
     }
     return lines;
 
 }
 
+function createGraph(arr:number[][]):void{
+
+    
+    for(let i = 0; i < arr.length; i++){
+        //let linha:string = '';
+        for(let j = 0; j < arr.length; j++){
+
+            if(j<arr[i].length){
+                //linha+=arr[i][j];
+                if(arr[i][j]==1){
+
+                }
+            }else{
+                //linha+=arr[j][i];
+                if(arr[j][i]==1)
+                {
+
+                }
+            }
+
+        }
+        
+    }
+}
+
+let graph:Dijkstra = new Dijkstra();
+graph.addVertex('A', { B: 7, C: 8 });
+graph.addVertex('C', { A: 8 });
+graph.addVertex('B', { A: 7, F: 8 });
+graph.addVertex('F', { B: 8 });
+
+console.log(graph.shortestPath('A', 'F'));
