@@ -3,10 +3,31 @@
 <head>
 	<meta charset="utf-8" />
 	<title>Algoritmo de Buscas</title>
+	<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="assets/css/master.css">
 </head>
 <body>
-	<canvas id="myCanvas" width="2000" height="2000" />
-	<!--script src="./build/libs/dijkstras-algorithm-master/dijkstra.js"></script-->
+	<main class="container">
+<h1>Algoritmo de Busca</h1>
+<div class="tab-content">
+			<form action="#">
+			<label for="">Nome Vértice: </label>
+			<input class="form-control" type="text">
+			<label for="">Quantidade Vértices: </label>
+			<input class="form-control" type="text">
+
+			<div class="alert hidden" id="message">
+			</div>
+			<div class="botoes">
+				<button id="inserir" class="btn btn-success">Inserir Vértices</button>
+			</div>
+		</form>
+		</div>
+<canvas id="myCanvas" width="2000" height="2000" />
+<!--script src="./build/libs/dijkstras-algorithm-master/dijkstra.js"></script-->
+	Your browser does not support the HTML5 canvas tag.
+</canvas>
+</main>
 	<script src="./dist/bundle.js"></script>
 </body>
 </body>
