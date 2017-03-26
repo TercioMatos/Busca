@@ -10,19 +10,22 @@
 	<main class="container">
 <h1>Algoritmo de Busca</h1>
 <div class="tab-content">
-			<form action="#">
-			<label for="">Nome Vértice: </label>
-			<input class="form-control" type="text">
-			<label for="">Quantidade Vértices: </label>
-			<input class="form-control" type="text">
+		<label for="qtdVertices">Quantidade Vértices: </label>
+		<input class="form-control" name="qtdVertices" type="number" id="qtdVertices"/>
 
-			<div class="alert hidden" id="message">
-			</div>
-			<div class="botoes">
-				<button id="inserir" class="btn btn-success">Inserir Vértices</button>
-			</div>
-		</form>
+
+		<div class="alert hidden" id="message">
 		</div>
+		<label for="vDe">De: </label>
+		<input class="form-control" name="vDe" type="text" id="vDe"/>
+
+		<label for="vAte">Ate: </label>
+		<input class="form-control" name="vAte" type="text" id="vAte"/>
+		<div class="botoes">
+			<button id="inserir" class="btn btn-success">Inserir Vértices</button>
+			<button id="calcDistance" class="btn btn-success">Calcular Distancia</button>
+		</div>
+</div>
 <canvas id="myCanvas" width="2000" height="2000" />
 <!--script src="./build/libs/dijkstras-algorithm-master/dijkstra.js"></script-->
 	Your browser does not support the HTML5 canvas tag.
