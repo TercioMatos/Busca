@@ -21,19 +21,79 @@ var initialY:number = 100;
 var tempVertices:IVertice[]=[];
 var sqrt2:number=Math.sqrt(2);
 var graphArray:number[][];
-var nVert:number = 5; //number of vertices
+var nVert:number = 10; //number of vertices
 let graph:Dijkstra;
 
 
 window.onload = () => {
+
    canvas = <HTMLCanvasElement>document.getElementById('myCanvas');
    ctx = canvas.getContext("2d");
    elemLeft = canvas.offsetLeft;
    elemTop = canvas.offsetTop;
+
    loadGraph();
+
 }
 
+
+
+
+
 function loadGraph():void{
+
+    document.getElementById("inserir").addEventListener('click', (event)=>{
+
+        //parseInt(document.getElementById("qtdVertices").textContent);
+        var input:HTMLInputElement = <HTMLInputElement> document.getElementById("qtdVertices");
+        nVert = parseInt(input.value);
+        if(!isNaN(nVert) && nVert >=1 && nVert<=20){
+            vertices=[];
+            graphArray=[];
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+ 
+            generategrah(nVert);
+            graphArray = createArray(nVert);
+        }else{
+            console.log("Digite apenas numeros entre 1-20");
+        }
+    });
+
+
+    document.getElementById("calcDistance").addEventListener('click', (event)=>{
+
+        var vDeInput:HTMLInputElement = <HTMLInputElement> document.getElementById("vDe");
+        var vAteInput:HTMLInputElement = <HTMLInputElement> document.getElementById("vAte");
+
+        graphArray.forEach((element:number[])=>{
+            console.log(element.toString());
+        })
+        createGraph(graphArray,vDeInput.value.toString().toUpperCase(), vAteInput.value.toString().toUpperCase());
+        console.log("Distancia Manhattan: "+ calcDistanceManhattan(vDeInput.value.toString().toUpperCase(), vAteInput.value.toString().toUpperCase()));
+    });
+
+    function calcDistanceManhattan(vDe:string, vAte:string):number{
+        //dm = |x1 - x2| + |y1 - y2|
+        let p1:IVertice;
+        let p2:IVertice;
+        vertices.forEach(vertice => {
+            if(vertice.letter==vDe){
+                p1=vertice;
+            }
+            if(vertice.letter==vAte){
+                p2=vertice;
+            }
+        })
+        if(p1 && p2){
+            let distance =  (p1.column - p2.column) + (p1.line - p2.line);
+            if(distance<0){
+                distance*=-1;
+            }
+            return distance;
+        }else{
+            return 0;
+        }
+    }
 
     function drawDiagonalLine(){
         ctx.beginPath();
@@ -57,7 +117,7 @@ function loadGraph():void{
             //goes over lines
             for(let column:number=0; column < Math.ceil(nVertices/2) && nV > 0; column++, nV--){
 
-                console.log('column '+ column, 'initialX '+initialX, 'vezes '+ column*initialX);
+                //console.log('column '+ column, 'initialX '+initialX, 'vezes '+ column*initialX);
                 
                 vertices.push({
                     colour:"blue",
@@ -96,14 +156,17 @@ function loadGraph():void{
         //case for same columns
         if(tempVertices[0].column==tempVertices[1].column && 
         checkEquality(tempVertices[0].line,tempVertices[1].line)){
+            saveValue(1);
             return true;
         }else if(tempVertices[0].line==tempVertices[1].line && 
         checkEquality(tempVertices[0].column,tempVertices[1].column)){
+            saveValue(1);
             return true;
         }else if(
             checkEquality(tempVertices[0].line,tempVertices[1].line)
             && checkEquality(tempVertices[0].column,tempVertices[1].column)
         ){
+            saveValue(sqrt2);
             return true;
         }
         return false;
@@ -112,19 +175,19 @@ function loadGraph():void{
     canvas.addEventListener('click',(event)=>{
         var x:number = event.pageX - elemLeft;
         var y:number = event.pageY - elemTop;
-    
+        
         vertices.forEach((item:IVertice)=>{
 
                 if ((y > (item.y-rWidth) && y < item.y + rWidth) 
                 && (x > (item.x - rWidth) && x < item.x + rWidth)){
 
                     //alert('clicked an element ['+item.line+' , '+item.column+']');
+                    //console.log(tempVertices.length);
                     tempVertices.push(item);
-                    if(tempVertices.length==2){
+                    if(tempVertices.length>=2){
                         if(isValidLink()){
                             alert('valid!!!');
                             drawDiagonalLine();
-                            saveOne();
                         }else{
                             alert('invalid!!!');
                         }
@@ -135,27 +198,24 @@ function loadGraph():void{
         })
     });
 
-    generategrah(nVert);
-    graphArray = createArray(nVert);
-    console.log(graphArray);
+   // generategrah(nVert);
+    //graphArray = createArray(nVert);
+    //console.log(graphArray);
 }
 
-function saveOne(){
+function saveValue(value:number){
 
     let temNV = nVert;
     if(tempVertices[0].i<tempVertices[1].i){
-        graphArray[tempVertices[1].i][tempVertices[0].i]=1;
+        graphArray[tempVertices[1].i][tempVertices[0].i]=value;
     }else{
-        graphArray[tempVertices[0].i][tempVertices[1].i]=1;
+        graphArray[tempVertices[0].i][tempVertices[1].i]=value;
     }
     //graphArray[tempVertices[1].i][tempVertices[0].i]=1;
-    console.log('[0]: '+tempVertices[0].i);
-    console.log('[1]: '+tempVertices[1].i);
-    graphArray.forEach((element:number[])=>{
-        console.log(element.toString());
-    })
+    //console.log('[0]: '+tempVertices[0].i);
+    //console.log('[1]: '+tempVertices[1].i);
 
-    createGraph(graphArray);
+    //createGraph(graphArray);
 }
 
 
@@ -170,31 +230,28 @@ function createArray(nVertices:number):number[][]{
 
 }
 
-function createGraph(arr:number[][]):void{
+function createGraph(arr:number[][],vDe:string,vAte:string):void{
 
     graph = new Dijkstra();    
     for(let i = 0; i < arr.length; i++){
         let edge: Object = {};
-        var oi:string=String.fromCharCode(65+i)+": ";
         for(let j = 0; j < arr.length; j++){
 
             if(j<arr[i].length){
-                if(arr[i][j]==1){
+                if(arr[i][j]>=1){
                     edge[String.fromCharCode(65+j)]= arr[i][j];
-                    oi+= String.fromCharCode(65+j);
                 }
             }else{
-                if(arr[j][i]==1)
+                if(arr[j][i]>=1)
                 {
                     edge[String.fromCharCode(65+j)]= arr[j][i];
-                    oi+= String.fromCharCode(65+j);
                 }
             }
         }
         graph.addVertex(String.fromCharCode(65+i),edge);
         
     }
-    console.log(graph.shortestPath('A', 'E'));
-    console.log("Distance: "+ graph.calcDistance(graph.shortestPath('A', 'E')));
+    console.log(graph.shortestPath(vDe, vAte));
+    console.log("Distance: "+ graph.calcDistance(graph.shortestPath(vDe, vAte)));
 }
 
